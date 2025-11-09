@@ -1,0 +1,432 @@
+import { useEffect, useState } from 'react';import { useEffect, useState } from 'react';
+
+import CategoryFilter from '../components/CategoryFilter';import CategoryFilter from '../components/CategoryFilter';
+
+import PropertyCard from '../components/PropertyCard';import PropertyCard from '../components/PropertyCard';
+
+// import styles from '../styles/HomePage.module.css';// import styles from '../styles/HomePage.module.css';
+
+
+
+// Sample data for properties// Sample data for properties
+
+const sampleProperties = [const sampleProperties = [
+
+  {  {
+
+    id: 1,    id: 1,
+
+    title: 'Modern Villa with Pool',    title: 'Modern Villa with Pool',
+
+    price: 45000,    price: 45000,
+
+    location: 'Akota, Vadodara',    location: 'Akota, Vadodara',
+
+    category: 'Villa',    category: 'Villa',
+
+    rentType: 'Monthly',    rentType: 'Monthly',
+
+    rating: 4.8,    rating: 4.8,
+
+    reviews: 24,    reviews: 24,
+
+    image: 'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=800&auto=format&fit=crop&q=60'    image: 'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=800&auto=format&fit=crop&q=60'
+
+  },  },
+
+  {  {
+
+    id: 2,    id: 2,
+
+    title: 'Cozy Studio Apartment',    title: 'Cozy Studio Apartment',
+
+    price: 15000,    price: 15000,
+
+    location: 'Alkapuri, Vadodara',    location: 'Alkapuri, Vadodara',
+
+    category: 'Studio',    category: 'Studio',
+
+    rentType: 'Monthly',    rentType: 'Monthly',
+
+    rating: 4.5,    rating: 4.5,
+
+    reviews: 16,    reviews: 16,
+
+    image: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&auto=format&fit=crop&q=60'    image: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&auto=format&fit=crop&q=60'
+
+  },  },
+
+  {  {
+
+    id: 3,    id: 3,
+
+    title: 'Spacious Farm House',    title: 'Spacious Farm House',
+
+    price: 75000,    price: 75000,
+
+    location: 'Sevasi, Vadodara',    location: 'Sevasi, Vadodara',
+
+    category: 'Farm House',    category: 'Farm House',
+
+    rentType: 'Monthly',    rentType: 'Monthly',
+
+    rating: 4.9,    rating: 4.9,
+
+    reviews: 32,    reviews: 32,
+
+    image: 'https://images.unsplash.com/photo-1505843513577-22bb7d21e455?w=800&auto=format&fit=crop&q=60'    image: 'https://images.unsplash.com/photo-1505843513577-22bb7d21e455?w=800&auto=format&fit=crop&q=60'
+
+  },  },
+
+  {  {
+
+    id: 4,    id: 4,
+
+    title: 'Luxury Pool House',    title: 'Luxury Pool House',
+
+    price: 95000,    price: 95000,
+
+    location: 'Race Course, Vadodara',    location: 'Race Course, Vadodara',
+
+    category: 'Pool House',    category: 'Pool House',
+
+    rentType: 'Monthly',    rentType: 'Monthly',
+
+    rating: 4.7,    rating: 4.7,
+
+    reviews: 28,    reviews: 28,
+
+    image: 'https://images.unsplash.com/photo-1613977257363-707ba9348227?w=800&auto=format&fit=crop&q=60'    image: 'https://images.unsplash.com/photo-1613977257363-707ba9348227?w=800&auto=format&fit=crop&q=60'
+
+  },  },
+
+  {  {
+
+    id: 5,    id: 5,
+
+    title: 'Modern PG Accommodation',    title: 'Modern PG Accommodation',
+
+    price: 8000,    price: 8000,
+
+    location: 'Fatehgunj, Vadodara',    location: 'Fatehgunj, Vadodara',
+
+    category: 'PG',    category: 'PG',
+
+    rentType: 'Monthly',    rentType: 'Monthly',
+
+    rating: 4.3,    rating: 4.3,
+
+    reviews: 45,    reviews: 45,
+
+    image: 'https://images.unsplash.com/photo-1626178793926-22b28830aa30?w=800&auto=format&fit=crop&q=60'    image: 'https://images.unsplash.com/photo-1626178793926-22b28830aa30?w=800&auto=format&fit=crop&q=60'
+
+  },  },
+
+  {  {
+
+    id: 6,    id: 6,
+
+    title: 'Retail Shop Space',    title: 'Retail Shop Space',
+
+    price: 35000,    price: 35000,
+
+    location: 'Alkapuri, Vadodara',    location: 'Alkapuri, Vadodara',
+
+    category: 'Shops',    category: 'Shops',
+
+    rentType: 'Monthly',    rentType: 'Monthly',
+
+    rating: 4.6,    rating: 4.6,
+
+    reviews: 19,    reviews: 19,
+
+    image: 'https://images.unsplash.com/photo-1582037928769-351d2fc46bad?w=800&auto=format&fit=crop&q=60'    image: 'https://images.unsplash.com/photo-1582037928769-351d2fc46bad?w=800&auto=format&fit=crop&q=60'
+
+  },  },
+
+  {  {
+
+    id: 7,    id: 7,
+
+    title: 'Premium Studio Apartment',    title: 'Premium Studio Apartment',
+
+    price: 25000,    price: 25000,
+
+    location: 'Gotri, Vadodara',    location: 'Gotri, Vadodara',
+
+    category: 'Studio',    category: 'Studio',
+
+    rentType: 'Monthly',    rentType: 'Monthly',
+
+    rating: 4.4,    rating: 4.4,
+
+    reviews: 23,    reviews: 23,
+
+    image: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&auto=format&fit=crop&q=60'    image: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&auto=format&fit=crop&q=60'
+
+  },  },
+
+  {  {
+
+    id: 8,    id: 8,
+
+    title: 'Classic Bungalow',    title: 'Classic Bungalow',
+
+    price: 85000,    price: 85000,
+
+    location: 'Old Padra Road, Vadodara',    location: 'Old Padra Road, Vadodara',
+
+    category: 'Bungalow',    category: 'Bungalow',
+
+    rentType: 'Monthly',    rentType: 'Monthly',
+
+    rating: 4.9,    rating: 4.9,
+
+    reviews: 37,    reviews: 37,
+
+    image: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&auto=format&fit=crop&q=60'    image: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&auto=format&fit=crop&q=60'
+
+  }  }
+
+];];
+
+
+
+export default function HomePage() {export default function HomePage() {
+
+  const [properties] = useState(sampleProperties);  const [properties] = useState(sampleProperties);
+
+  const [selectedCategory, setSelectedCategory] = useState(null);  const [selectedCategory, setSelectedCategory] = useState(null);
+
+  const [filteredProperties, setFilteredProperties] = useState(properties);  const [filteredProperties, setFilteredProperties] = useState(properties);
+
+
+
+  useEffect(() => {  useEffect(() => {
+
+    let filtered = [...properties];    let filtered = [...properties];
+
+        
+
+    if (selectedCategory) {    if (selectedCategory) {
+
+      const categoryMap = {      const categoryMap = {
+
+        'villa': 'Villa',        'villa': 'Villa',
+
+        'studio': 'Studio',        'studio': 'Studio',
+
+        'farmhouse': 'Farm House',        'farmhouse': 'Farm House',
+
+        'poolhouse': 'Pool House',        'poolhouse': 'Pool House',
+
+        'flat': 'Flat',        'flat': 'Flat',
+
+        'rental': 'Rental Flat',        'rental': 'Rental Flat',
+
+        'pg': 'PG',        'pg': 'PG',
+
+        'cabin': 'Cabins',        'cabin': 'Cabins',
+
+        'shop': 'Shops',        'shop': 'Shops',
+
+        'bungalow': 'Bungalow'        'bungalow': 'Bungalow'
+
+      };      };
+
+      const targetCategory = categoryMap[selectedCategory];      const targetCategory = categoryMap[selectedCategory];
+
+      filtered = filtered.filter(property => property.category === targetCategory);      filtered = filtered.filter(property => property.category === targetCategory);
+
+    }    }
+
+
+
+    setFilteredProperties(filtered);    setFilteredProperties(filtered);
+
+  }, [selectedCategory, properties]);  }, [selectedCategory, properties]);
+
+
+
+  const handleCategoryChange = (category) => {  const handleCategoryChange = (category) => {
+
+    setSelectedCategory(category);    setSelectedCategory(category);
+
+  };  };
+
+
+
+  return (  return (
+
+    <div>    <div>
+
+      <div className="bg-white py-4 border-b">      <div className="bg-white py-4 border-b">
+
+        <div className="max-w-7xl mx-auto px-4">        <div className="max-w-7xl mx-auto px-4">
+
+          {/* Search and Cities Section */}          {/* Search and Cities Section */}
+
+          <div className="flex items-center gap-4 mb-4">          <div className="flex items-center gap-4 mb-4">
+
+            {/* Search Bar */}            {/* Search Bar */}
+
+            <div className="relative flex-1 max-w-xs">            <div className="relative flex-1 max-w-xs">
+
+              <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">              <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
+
+                <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">                <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+
+                </svg>                </svg>
+
+              </div>              </div>
+
+              <input              <input
+
+                type="text"                type="text"
+
+                placeholder="Search by city..."                placeholder="Search by city..."
+
+                className="w-full pl-9 pr-3 py-1.5 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-primary-500"                className="w-full pl-9 pr-3 py-1.5 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-primary-500"
+
+              />              />
+
+            </div>            </div>
+
+
+
+            {/* City Pills */}            {/* City Pills */}
+
+            <div className="flex items-center space-x-2 overflow-x-auto hide-scrollbar">            <div className="flex items-center space-x-2 overflow-x-auto hide-scrollbar">
+
+              {['Vadodara', 'Surat', 'Ahmedabad', 'Mumbai', 'Delhi'].map((city) => (              {['Vadodara', 'Surat', 'Ahmedabad', 'Mumbai', 'Delhi'].map((city) => (
+
+                <button                <button
+
+                  key={city}                  key={city}
+
+                  className="px-3 py-1.5 text-sm font-medium text-gray-700 bg-gray-100 rounded-full hover:bg-primary-50 hover:text-primary-600 transition whitespace-nowrap"                  className="px-3 py-1.5 text-sm font-medium text-gray-700 bg-gray-100 rounded-full hover:bg-primary-50 hover:text-primary-600 transition whitespace-nowrap"
+
+                >                >
+
+                  {city}                  {city}
+
+                </button>                </button>
+
+              ))}              ))}
+
+            </div>            </div>
+
+          </div>          </div>
+
+
+
+          {/* Property Types Section */}          {/* Property Types Section */}
+
+          <div>          <div>
+
+            <CategoryFilter            <CategoryFilter
+
+              selectedCategory={selectedCategory}              selectedCategory={selectedCategory}
+
+              onCategoryChange={handleCategoryChange}              onCategoryChange={handleCategoryChange}
+
+            />            />
+
+
+
+            {/* Duration Section */}            {/* Duration Section */}
+
+            <div className="flex items-center gap-4 py-2 border-t">            <div className="flex items-center gap-4 py-2 border-t">
+
+              <h2 className="text-xs font-medium text-gray-600 whitespace-nowrap">Duration:</h2>              <h2 className="text-xs font-medium text-gray-600 whitespace-nowrap">Duration:</h2>
+
+              <div className="flex gap-2 flex-wrap">              <div className="flex gap-2 flex-wrap">
+
+                {[                {[
+
+                  { label: '1 day', value: '1d' },                  { label: '1 day', value: '1d' },
+
+                  { label: '2 days', value: '2d' },                  { label: '2 days', value: '2d' },
+
+                  { label: '1 week', value: '1w' },                  { label: '1 week', value: '1w' },
+
+                  { label: '1 month', value: '1m' },                  { label: '1 month', value: '1m' },
+
+                  { label: '1 year', value: '1y' }                  { label: '1 year', value: '1y' }
+
+                ].map((duration) => (                ].map((duration) => (
+
+                  <button                  <button
+
+                    key={duration.value}                    key={duration.value}
+
+                    className="px-3 py-1 text-xs font-medium text-gray-700 bg-gray-100 rounded hover:bg-primary-50 hover:text-primary-600 transition"                    className="px-3 py-1 text-xs font-medium text-gray-700 bg-gray-100 rounded hover:bg-primary-50 hover:text-primary-600 transition"
+
+                  >                  >
+
+                    {duration.label}                    {duration.label}
+
+                  </button>                  </button>
+
+                ))}                ))}
+
+              </div>              </div>
+
+              <select className="text-xs border border-gray-300 rounded px-2 py-1 bg-white focus:outline-none focus:ring-1 focus:ring-primary-500">              <select className="text-xs border border-gray-300 rounded px-2 py-1 bg-white focus:outline-none focus:ring-1 focus:ring-primary-500">
+
+                <option value="days">Days</option>                <option value="days">Days</option>
+
+                <option value="weeks">Weeks</option>                <option value="weeks">Weeks</option>
+
+                <option value="months">Months</option>                <option value="months">Months</option>
+
+                <option value="years">Years</option>                <option value="years">Years</option>
+
+              </select>              </select>
+
+            </div>            </div>
+
+          </div>          </div>
+
+        </div>        </div>
+
+      </div>      </div>
+
+
+
+      <div className="max-w-7xl mx-auto px-4">      <div className="max-w-7xl mx-auto px-4">
+
+        {/* Property Cards Grid */}
+
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 py-6">        {/* Property Cards Grid */}
+
+          {filteredProperties.map((property) => (        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 py-6">
+
+            <PropertyCard key={property.id} property={property} />          {filteredProperties.map((property) => (
+
+          ))}            <PropertyCard key={property.id} property={property} />
+
+        </div>          ))}
+
+        {filteredProperties.length === 0 && (        </div>
+
+          <div className="text-center py-12">        {filteredProperties.length === 0 && (
+
+            <h3 className="text-lg font-medium text-gray-900 mb-2">No properties found</h3>          <div className="text-center py-12">
+
+            <p className="text-gray-500">Try selecting a different category</p>            <h3 className="text-lg font-medium text-gray-900 mb-2">No properties found</h3>
+
+          </div>            <p className="text-gray-500">Try selecting a different category</p>
+
+        )}          </div>
+
+      </div>        )}
+
+    </div>      </div>
+
+  );    </div>
+
+}  );
+}

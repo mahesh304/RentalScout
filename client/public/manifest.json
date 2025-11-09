@@ -1,0 +1,16 @@
+{
+  "name": "RentalScout",
+  "short_name": "RentalScout",
+  "description": "Find Your Perfect Home",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#6366F1",
+  "icons": [
+    {
+      "src": "/rentalscout-logo.svg",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/svg+xml"
+    }
+  ]
+}

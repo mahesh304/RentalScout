@@ -1,8 +1,7 @@
 # 🏠 RentalScout
 
 A full-stack property rental platform built with the MERN stack (MongoDB, Express.js, React, Node.js). RentalScout allows users to browse, list, and book rental properties with features like reviews, Google Maps integration
----
-** LIVE DEMO ** https://rentalscout-1.onrender.com
+---**🚀 LIVE DEMO:** [https://rentalscout-1.onrender.com](https://rentalscout-1.onrender.com)
 ## ✨ Features
 
 ### For Tenants

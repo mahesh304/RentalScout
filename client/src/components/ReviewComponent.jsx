@@ -24,7 +24,8 @@ const ReviewComponent = ({ listingId }) => {
       }
       
       console.log('Fetching reviews for listing:', listingId);
-      const response = await axios.get(`http://localhost:5000/api/reviews/listing/${listingId}`);
+      const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+      const response = await axios.get(`${baseUrl}/api/reviews/listing/${listingId}`);
       console.log('Reviews fetched successfully:', response.data);
       setReviews(response.data);
       setError('');
@@ -68,9 +69,9 @@ const ReviewComponent = ({ listingId }) => {
         comment: newReview.comment
       });
 
-      const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+      const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
       const response = await axios.post(
-        'http://localhost:5000/api/reviews',
+        `${baseUrl}/api/reviews`,
         {
           listingId,
           rating: newReview.rating,

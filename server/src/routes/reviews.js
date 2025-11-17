@@ -67,6 +67,15 @@ router.post('/', auth, async (req, res) => {
 
     await review.save();
 
+    // Update listing's rating and review count
+    const allReviews = await Review.find({ listing: listingId });
+    const avgRating = allReviews.reduce((sum, r) => sum + r.rating, 0) / allReviews.length;
+    
+    await Listing.findByIdAndUpdate(listingId, {
+      rating: Math.round(avgRating * 10) / 10, // Round to 1 decimal
+      $set: { 'reviewCount': allReviews.length }
+    });
+
     // Populate user information before sending response
     await review.populate('user', 'username firstName lastName');
     
@@ -93,6 +102,15 @@ router.put('/:reviewId', auth, async (req, res) => {
     review.comment = comment;
 
     await review.save();
+    
+    // Update listing's rating
+    const allReviews = await Review.find({ listing: review.listing });
+    const avgRating = allReviews.reduce((sum, r) => sum + r.rating, 0) / allReviews.length;
+    
+    await Listing.findByIdAndUpdate(review.listing, {
+      rating: Math.round(avgRating * 10) / 10
+    });
+    
     await review.populate('user', 'username firstName lastName');
 
     res.json(review);
@@ -111,6 +129,22 @@ router.delete('/:reviewId', auth, async (req, res) => {
 
     if (!review) {
       return res.status(404).json({ message: 'Review not found or unauthorized' });
+    }
+
+    // Update listing's rating and review count
+    const allReviews = await Review.find({ listing: review.listing });
+    if (allReviews.length > 0) {
+      const avgRating = allReviews.reduce((sum, r) => sum + r.rating, 0) / allReviews.length;
+      await Listing.findByIdAndUpdate(review.listing, {
+        rating: Math.round(avgRating * 10) / 10,
+        $set: { 'reviewCount': allReviews.length }
+      });
+    } else {
+      // No reviews left, reset to 0
+      await Listing.findByIdAndUpdate(review.listing, {
+        rating: 0,
+        $set: { 'reviewCount': 0 }
+      });
     }
 
     res.json({ message: 'Review deleted successfully' });

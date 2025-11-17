@@ -61,11 +61,22 @@ export default function PropertyDetails() {
   console.log('Constructed image URLs:', allImages.map(img => getImageUrl(img)));
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
+    <div className="min-h-screen bg-gray-50 py-4 sm:py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Back Button */}
+        <button
+          onClick={() => navigate(-1)}
+          className="mb-4 sm:mb-6 inline-flex items-center text-gray-600 hover:text-gray-900 transition-colors"
+        >
+          <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
+          </svg>
+          <span className="font-medium">Back</span>
+        </button>
+
         {/* Image Gallery */}
-        <div className="mb-8">
-          <div className="relative h-[500px] rounded-lg overflow-hidden mb-4">
+        <div className="mb-6 sm:mb-8">
+          <div className="relative h-64 sm:h-80 md:h-96 lg:h-[500px] rounded-lg overflow-hidden mb-3 sm:mb-4">
             <img
               src={getImageUrl(allImages[selectedImage])}
               alt={`${property.title} - Image ${selectedImage + 1}`}
@@ -76,12 +87,12 @@ export default function PropertyDetails() {
               }}
             />
           </div>
-          <div className="grid grid-cols-4 gap-4">
+          <div className="grid grid-cols-4 gap-2 sm:gap-4">
             {allImages.map((image, index) => (
               <button
                 key={index}
                 onClick={() => setSelectedImage(index)}
-                className={`relative h-24 rounded-lg overflow-hidden ${
+                className={`relative h-16 sm:h-20 md:h-24 rounded-lg overflow-hidden ${
                   selectedImage === index ? 'ring-2 ring-primary-500' : ''
                 }`}
               >

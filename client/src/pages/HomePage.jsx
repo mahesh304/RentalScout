@@ -104,10 +104,11 @@ export default function HomePage() {
       <div className="bg-white py-4 border-b">
         <div className="max-w-7xl mx-auto px-4">
           {/* Search and Cities Section */}
-          <div className="flex justify-between items-center mb-6">
-            <div className="flex items-center gap-4">
+          <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-4 mb-6">
+            {/* Search and City Pills Container */}
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 flex-1">
               {/* Search Bar */}
-              <div className="relative flex-1 max-w-xs">
+              <div className="relative w-full sm:w-64 lg:w-80">
                 <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
                   <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -118,12 +119,12 @@ export default function HomePage() {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Search by city, area or title..."
-                  className="w-full pl-9 pr-3 py-1.5 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-primary-500"
+                  className="w-full pl-9 pr-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-primary-500"
                 />
               </div>
 
               {/* City Pills */}
-              <div className="flex items-center space-x-2 overflow-x-auto hide-scrollbar">
+              <div className="flex items-center gap-2 overflow-x-auto hide-scrollbar pb-1">
                 {['Vadodara', 'Surat', 'Ahmedabad', 'Mumbai', 'Delhi', 'Pune', 'Bangalore', 'Hyderabad'].map((city) => (
                   <button
                     key={city}
@@ -144,7 +145,7 @@ export default function HomePage() {
             {user?.role === 'owner' && (
               <Link
                 to="/listings/add"
-                className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
+                className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors text-center whitespace-nowrap"
               >
                 Add New Property
               </Link>

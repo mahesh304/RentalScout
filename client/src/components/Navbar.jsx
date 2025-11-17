@@ -20,7 +20,7 @@ export default function Navbar() {
 
   return (
     <Disclosure as="nav" className="bg-white shadow-sm relative z-50">
-      {({ open }) => (
+      {({ open, close }) => (
         <>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between h-16">
@@ -158,6 +158,7 @@ export default function Navbar() {
                 <Link
                   key={item.name}
                   to={item.href}
+                  onClick={() => close()}
                   className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50"
                 >
                   {item.name}
@@ -166,6 +167,7 @@ export default function Navbar() {
               {user?.role === 'owner' && (
                 <Link
                   to="/listings/add"
+                  onClick={() => close()}
                   className="block px-3 py-2 rounded-md text-base font-medium text-primary-600 hover:text-primary-700 hover:bg-gray-50"
                 >
                   List Property
@@ -185,6 +187,7 @@ export default function Navbar() {
                   </div>
                   <Link
                     to="/profile"
+                    onClick={() => close()}
                     className="block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-900 hover:bg-gray-100"
                   >
                     Your Profile
@@ -192,13 +195,17 @@ export default function Navbar() {
                   {user.role === 'owner' && (
                     <Link
                       to="/listings/add"
+                      onClick={() => close()}
                       className="block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-900 hover:bg-gray-100"
                     >
                       List Property
                     </Link>
                   )}
                   <button
-                    onClick={handleLogout}
+                    onClick={() => {
+                      handleLogout();
+                      close();
+                    }}
                     className="block w-full text-left px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-900 hover:bg-gray-100"
                   >
                     Sign out
@@ -208,12 +215,14 @@ export default function Navbar() {
                 <div className="space-y-1 px-4">
                   <Link
                     to="/login"
+                    onClick={() => close()}
                     className="block text-center w-full px-4 py-2 border border-transparent text-base font-medium rounded-md text-primary-600 hover:text-primary-700"
                   >
                     Login
                   </Link>
                   <Link
                     to="/signup"
+                    onClick={() => close()}
                     className="block text-center w-full px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-primary-600 hover:bg-primary-700"
                   >
                     Sign Up
